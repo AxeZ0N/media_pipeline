@@ -2,8 +2,11 @@
 
 cd "/media/k/General/Ryan/Desktop/Other/Code/Helpful/Media_Pipeline"
 
-"./watcher"
-echo "Started watching!"
+if [ -d ".watcher" ]; then
+	echo "Already watching!"
+fi
+
+echo "Began autoplay!"
 
 while true; do
 	if [[ -s ".to_download" ]]; then

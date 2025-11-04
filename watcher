@@ -11,7 +11,9 @@ read_file()
 
 if [ -d ".watcher" ]; then
 	echo "Already running!"
-	exit
+	exit 1
+else
+	echo "Started watching!"
 fi
 
 mkdir ".watcher"
