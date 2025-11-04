@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+
+# Hacky workaround for running a python script inside a bash script
+# 'easier' than programatically piping the output to the rest of the scripts
+read_file()
+{
+	local name="${1//./[.]}"  # escape name for sed regex
+	sed -En '/^#---=== '"$name"' ===---$/,$ {/^#---=== '"$name"' ===---$/ n; /^#---===/ q; p; }' "$0"
+}
+
+if [ -d ".watcher" ]; then
+	echo "Already running!"
+	exit
+fi
+
+mkdir ".watcher"
+touch ".watcher/$$"
+
+"./venv/bin/python3" -c "$(read_file watcher.py)" > ".to_download"
+
+rm ".watcher/$$"
+rmdir ".watcher"
+
+exit
+
+# Watches any and all discord activity
+# Filters out messages posted in CHANNEL_ID
+# If those happen to have any of DOMAINS
+# Print the content, flush the buffer, and reset
+
+#---=== watcher.py ===---
+import discord
+import os
+import logging
+logging.disable(logging.CRITICAL)
+for name, logger in logging.root.manager.loggerDict.items():
+    logger.disabled=True
+
+CHANNEL_ID = 828429968567435264 # My DMs with Aleah
+TOKEN = os.environ.get('DISCORD_TOKEN', None)
+DOMAINS = ['tiktok', 'instagram',]
+
+client = discord.Client()
+
+@client.event
+async def on_message(message):
+
+	if message.channel.id != CHANNEL_ID: return
+	content = message.content
+	[print(content,flush=True) 
+	for d in DOMAINS 
+		if d in content]
+
+client.run(TOKEN)
+#---===---

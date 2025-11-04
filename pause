@@ -1,0 +1,2 @@
+#!/bin/bash
+xdotool getactivewindow; xdotool search --name --sync --limit 1 "Hulu|Netflix|Plex|YouTube|Spotify" windowactivate --sync key space mousemove --window %1 --polar 0 0

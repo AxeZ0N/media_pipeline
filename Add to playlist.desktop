@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=asdf
+Exec=bash -c "echo "%u" >> "/media/k/General/Ryan/Desktop/Other/Code/Helpful/Media_Pipeline/.to_download""
+Comment=
+Terminal=true
+PrefersNonDefaultGPU=false
+Icon=applications-multimedia
+Type=Application
+Name[en_US]=Add to playlist

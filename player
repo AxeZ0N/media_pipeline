@@ -1,0 +1,2 @@
+#!/bin/bash
+mpv --playlist=.playlist --volume=110 --keep-open=no --screen=2; > ".playlist"

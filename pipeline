@@ -1,0 +1,31 @@
+#!/bin/bash
+
+cd "/media/k/General/Ryan/Desktop/Other/Code/Helpful/Media_Pipeline"
+
+"./watcher"
+echo "Started watching!"
+
+while true; do
+	if [[ -s ".to_download" ]]; then
+		echo "Downloading vids!"
+		"./downloader"
+		echo "Deleting completed downloads!"
+	fi
+
+	if [[ -s ".playlist" ]]; then
+		echo "Playing vids!"
+		win=$("./pause")
+		"./player"
+		"./pause"
+		sleep 0.1
+		"xdotool" "windowactivate" "$win" "mousemove" "--polar" "--window" "$win" "0" "0"
+		echo "Deleting completed vids!"
+		cd ".vids"
+		rm *
+		cd ".."
+	fi
+
+	sleep 1
+done
+
+trap exit EXIT
