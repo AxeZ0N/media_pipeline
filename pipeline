@@ -31,6 +31,6 @@ while true; do
 	sleep 1
 done
 
-trap $(echo "Ended autoplay") EXIT
+trap $(echo "Ended autoplay") SIGINT
 
 exit

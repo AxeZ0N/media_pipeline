@@ -24,7 +24,7 @@ touch ".watcher/$$"
 rm ".watcher/$$"
 rmdir ".watcher"
 
-trap $(echo "Ended autoplay") EXIT
+trap $(echo "Ended autoplay") SIGINT
 
 exit
 
