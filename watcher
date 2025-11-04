@@ -24,6 +24,8 @@ touch ".watcher/$$"
 rm ".watcher/$$"
 rmdir ".watcher"
 
+trap $(echo "Ended autoplay") EXIT
+
 exit
 
 # Watches any and all discord activity
