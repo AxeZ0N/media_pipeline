@@ -4,6 +4,9 @@ cd "/media/k/General/Ryan/Desktop/Other/Code/Helpful/Media_Pipeline"
 
 if [ -d ".watcher" ]; then
 	echo "Already watching!"
+else
+	"./watcher" & PID=$!
+	sleep 0.1
 fi
 
 echo "Began autoplay!"
@@ -29,8 +32,11 @@ while true; do
 	fi
 
 	sleep 1
+
+	trap break SIGINT
 done
 
-trap $(echo "Ended autoplay") SIGINT
+success=$(kill -s SIGINT $PID)
+echo "Ended autoplay" 
 
 exit

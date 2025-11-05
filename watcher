@@ -21,10 +21,12 @@ touch ".watcher/$$"
 
 "./venv/bin/python3" -c "$(read_file watcher.py)" > ".to_download"
 
-rm ".watcher/$$"
-rmdir ".watcher"
+cleanup(){
+	rm ".watcher/$$"
+	rmdir ".watcher"
+}
 
-trap $(echo "Ended autoplay") SIGINT
+trap $(cleanup) SIGINT EXIT
 
 exit
 
